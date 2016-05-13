@@ -102,3 +102,5 @@ ws.url=${ws}/${ws.id}
 ```bash
 java [-Denv=???] -jar monapp_uitester.jar
 ```
+
+#### Licence MIT
