@@ -74,10 +74,10 @@ phantomjs_driver_logFile=phantomjs.log
 ```
 - Paramètrage des propriétés pour le test
  - chercher dans l'ordre des fichiers 
-   - commons.propertes
+   - commons.properties
    - commons_[env].properties
-   -[idTest].properties
-   -[idTest]_[env].properties
+   -`[idTest].properties
+   - [idTest]_[env].properties
    
 - Exemple : 
  - commons.properties 
