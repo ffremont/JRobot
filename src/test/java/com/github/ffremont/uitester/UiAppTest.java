@@ -8,6 +8,9 @@ package com.github.ffremont.uitester;
 import com.github.ffremont.uitester.core.caps.PhantomJsWebCapabilitiesFactory;
 import java.util.Arrays;
 import net.codestory.simplelenium.driver.Browser;
+import net.codestory.simplelenium.driver.Configuration;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -17,13 +20,17 @@ import org.junit.Test;
 public class UiAppTest extends UiTest {
 
     @Test
+    public void instanceUiApp(){
+        UiApp app = new UiApp();
+        Assert.assertEquals(1, app.getTests().size());
+    }
+        
+    @Test
     public void run_ok(){
         UiApp app = new UiApp();
         app.setPhantomJsCapsFactory(new PhantomJsWebCapabilitiesFactory());
         app.setTests(Arrays.asList(new ExempleTF()));
         
-        app.run(Browser.PHANTOM_JS, null);
-        
-        
+        app.run(Browser.PHANTOM_JS, "web");
     }
 }

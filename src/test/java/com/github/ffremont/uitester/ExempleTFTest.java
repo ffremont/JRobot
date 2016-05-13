@@ -5,6 +5,7 @@
  */
 package com.github.ffremont.uitester;
 
+import org.junit.Assert;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -17,6 +18,6 @@ public class ExempleTFTest {
     @Test
     public void test(){
         ExempleTF test = new ExempleTF();
-        assertNotNull(test.getProps().getProperty("ws"));
+        Assert.assertEquals("http://google.fr/myTest", test.getProperty("ws.url"));
     }
 }
