@@ -91,14 +91,7 @@
             <groupId>io.undertow</groupId>
             <artifactId>undertow-websockets-jsr</artifactId>
             <version>${undertow.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ffremont</groupId>
-            <artifactId>uiTester</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        
+        </dependency>       
 
     </dependencies>
     
