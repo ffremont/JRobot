@@ -5,7 +5,7 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
 
 ### Installation
 - Ajouter le jar sur votre Nexus
-  -
+  - [téléchargement](https://drive.google.com/open?id=0B3RZ6sP4kUBANzB2MTh2QzFWSHc)
 - Ajouter la dépendance dans votre pom.xml
 ```xml
 <dependency>
