@@ -66,11 +66,12 @@ public class ExempleTF extends FunctionalTest{
 
 ###### Configuration
 - Paramètrage de phantomJs phantomjs.properties
+```properties
 phantomjs_exec_path=
 phantomjs_driver_path=
 phantomjs_driver_loglevel=ERROR
 phantomjs_driver_logFile=phantomjs.log
-
+```
 - Paramètrage des propriétés pour le test
  - chercher dans l'ordre des fichiers 
    - commons.propertes
