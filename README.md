@@ -76,7 +76,7 @@ phantomjs_driver_logFile=phantomjs.log
  - chercher dans l'ordre des fichiers 
    - commons.properties
    - commons_[env].properties
-   -`[idTest].properties
+   - [idTest].properties
    - [idTest]_[env].properties
    
 - Exemple : 
