@@ -85,7 +85,7 @@ public abstract class JRobot extends SeleniumTest {
         this.baseUrl = "";
     }
 
-    public abstract void test();
+    public abstract void useCase();
 
     public static Properties getCommonsProps(String env, Properties from) {
         if (COMMONS_ENV_PROPS == null) {

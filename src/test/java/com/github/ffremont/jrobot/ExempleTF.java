@@ -22,7 +22,7 @@ public class ExempleTF extends JRobot{
     }
 
     @Override
-    public void test() {
+    public void useCase() {
         goTo("http://localhost:4567");
         
         assertEquals("Page de test", title());

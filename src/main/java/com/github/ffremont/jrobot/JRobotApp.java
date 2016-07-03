@@ -91,7 +91,7 @@ public class JRobotApp {
             //driver.manage().window().setSize(new Dimension(config.getScreen().getWidth(), config.getScreen().getHeight()));
 
             try{
-                tf.test();
+                tf.useCase();
                 LOGGER.info("{} -> {}", tf.getId(), "OK");
             }catch(AssertionError ae){
                 LOGGER.info("{} -> {}", tf.getId(), "KO");

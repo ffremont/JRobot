@@ -1,7 +1,7 @@
-ui
+JRobot
 ======
 
-Framework de tests standalone paramètrable par environnement basé sur phantomjs.
+Framework pour faire des actions IHM automatisée sous la forme d'un jar standalone paramètrable par environnement basé sur phantomjs.
 
 ### Installation
 - Ajouter le jar sur votre Nexus
@@ -10,7 +10,7 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
 ```xml
 <dependency>
     <groupId>com.github.ffremont</groupId>
-    <artifactId>ui</artifactId>
+    <artifactId>jrobot</artifactId>
     <version>X.Y.Z</version>
 </dependency>
 ```
@@ -32,8 +32,7 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
                           <transformers>
                               <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                   <manifestEntries>
-                                      <Main-Class>com.github.ffremont.ui.UiApp</Main-Class>
-                                      <Class-Path>.</Class-Path>
+                                      <Main-Class>com.github.ffremont.jrobot.JRobotApp</Main-Class>
                                   </manifestEntries>
                               </transformer>
                           </transformers>
@@ -45,16 +44,16 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
   </build>
 ```
 
-### Ecriture d'un test
+### Ecriture d'un cas
 ```java
-public class ExempleTF extends AutomaticUi{
+public class ExempleTF extends JRobot{
 
     public ExempleTF(){
         super(UiConfig.create("web.test", "mon test"));
     }
 
     @Override
-    public void test() {
+    public void useCase() {
         goTo("http://localhost:4567");
         
         assertEquals("Page de test", title());
@@ -64,7 +63,7 @@ public class ExempleTF extends AutomaticUi{
 }
 ```
 
-###### Configuration
+###### Configuration dans le répertoire courant
 - Paramètrage de phantomJs phantomjs.properties
 ```properties
 phantomjs_exec_path=
@@ -72,7 +71,7 @@ phantomjs_driver_path=
 phantomjs_driver_loglevel=ERROR
 phantomjs_driver_logFile=phantomjs.log
 ```
-- Paramètrage des propriétés pour le test
+- Paramètrage des propriétés pour le cas
  - chercher dans l'ordre des fichiers 
    - commons.properties
    - commons_[env].properties
@@ -99,6 +98,11 @@ ws.url=${ws}/${ws.id}
   - ws.id=myTest
   - ws.url=www.google.fr/dev/myTest
 
+- Possibilité d'organiser les cas d'utilisation avec des namespaces
+ * ```java
+// va cherche dans ./web/test.properties la configuration du cas
+UiConfig.create("web.test", "mon test"); 
+```
 ###### Lancement
 ```bash
 java [-Denv=???] -jar monapp_ui.jar
