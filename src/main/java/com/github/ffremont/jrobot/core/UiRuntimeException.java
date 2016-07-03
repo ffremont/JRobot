@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.ffremont.uitester.core;
+package com.github.ffremont.jrobot.core;
 
 /**
  *
  * @author florent
  */
-public class UiTesterRuntimeException extends RuntimeException{
+public class UiRuntimeException extends RuntimeException{
 
-    public UiTesterRuntimeException(String message) {
+    public UiRuntimeException(String message) {
         super(message);
     }
     
-    public UiTesterRuntimeException(String message, Throwable cause) {
+    public UiRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }
     

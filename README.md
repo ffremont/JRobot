@@ -1,4 +1,4 @@
-UiTester
+ui
 ======
 
 Framework de tests standalone paramètrable par environnement basé sur phantomjs.
@@ -10,7 +10,7 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
 ```xml
 <dependency>
     <groupId>com.github.ffremont</groupId>
-    <artifactId>uiTester</artifactId>
+    <artifactId>ui</artifactId>
     <version>X.Y.Z</version>
 </dependency>
 ```
@@ -32,7 +32,7 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
                           <transformers>
                               <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                   <manifestEntries>
-                                      <Main-Class>com.github.ffremont.uitester.UiApp</Main-Class>
+                                      <Main-Class>com.github.ffremont.ui.UiApp</Main-Class>
                                       <Class-Path>.</Class-Path>
                                   </manifestEntries>
                               </transformer>
@@ -47,7 +47,7 @@ Framework de tests standalone paramètrable par environnement basé sur phantomj
 
 ### Ecriture d'un test
 ```java
-public class ExempleTF extends FunctionalTest{
+public class ExempleTF extends AutomaticUi{
 
     public ExempleTF(){
         super(UiConfig.create("web.test", "mon test"));
@@ -101,7 +101,7 @@ ws.url=${ws}/${ws.id}
 
 ###### Lancement
 ```bash
-java [-Denv=???] -jar monapp_uitester.jar
+java [-Denv=???] -jar monapp_ui.jar
 ```
 
 #### Licence MIT

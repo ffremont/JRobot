@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.ffremont.uitester;
+package com.github.ffremont.jrobot;
 
-import com.github.ffremont.uitester.core.FunctionalTest;
-import com.github.ffremont.uitester.core.caps.PhantomJsWebCapabilitiesFactory;
-import com.github.ffremont.uitester.core.caps.WebCapabilitiesFactory;
-import com.github.ffremont.uitester.core.console.ErrPrintStream;
-import com.github.ffremont.uitester.core.console.StdPrintStream;
+import com.github.ffremont.jrobot.core.JRobot;
+import com.github.ffremont.jrobot.core.caps.PhantomJsWebCapabilitiesFactory;
+import com.github.ffremont.jrobot.core.caps.WebCapabilitiesFactory;
+import com.github.ffremont.jrobot.core.console.ErrPrintStream;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,22 +23,22 @@ import org.slf4j.LoggerFactory;
  *
  * @author florent
  */
-public class UiApp {
+public class JRobotApp {
 
-    final static Logger LOGGER = LoggerFactory.getLogger(UiApp.class);
+    final static Logger LOGGER = LoggerFactory.getLogger(JRobotApp.class);
     
-    private List<FunctionalTest> tests;
+    private List<JRobot> tests;
 
     private PhantomJsWebCapabilitiesFactory phantomJsCapsFactory;
     
-    public UiApp(){
+    public JRobotApp(){
         this.tests = new ArrayList<>();
-        List<String> functionTests = new FastClasspathScanner().scan().getNamesOfSubclassesOf(FunctionalTest.class);
+        List<String> functionTests = new FastClasspathScanner().scan().getNamesOfSubclassesOf(JRobot.class);
         for(String name : functionTests){
             try {
                 try {
                     Class<?> aClass = Class.forName(name);
-                    tests.add((FunctionalTest) aClass.newInstance());
+                    tests.add((JRobot) aClass.newInstance());
                 } catch (InstantiationException | IllegalAccessException ex) {
                     LOGGER.error("oops",ex);
                 }
@@ -53,7 +52,7 @@ public class UiApp {
         } catch (InstantiationException ex) {
             LOGGER.error("oops",ex);
         } catch (IllegalAccessException ex) {
-            LOGGER.error("oops",ex);java.util.logging.Logger.getLogger(UiApp.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error("oops",ex);java.util.logging.Logger.getLogger(JRobotApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -67,7 +66,7 @@ public class UiApp {
             ns = args[0];
         }
 
-        (new UiApp()).run(browser, ns);
+        (new JRobotApp()).run(browser, ns);
     }
 
     /**
@@ -82,7 +81,7 @@ public class UiApp {
         }
         
         final WebCapabilitiesFactory capsFactory = factory;
-        tests.forEach((FunctionalTest tf) -> {
+        tests.forEach((JRobot tf) -> {
             if(ns != null && !tf.getId().startsWith(ns)){
                 return;
             }
@@ -100,11 +99,11 @@ public class UiApp {
         });
     }
 
-    public List<FunctionalTest> getTests() {
+    public List<JRobot> getTests() {
         return tests;
     }
 
-    public void setTests(List<FunctionalTest> tests) {
+    public void setTests(List<JRobot> tests) {
         this.tests = tests;
     }
 

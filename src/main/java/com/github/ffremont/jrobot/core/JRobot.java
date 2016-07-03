@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.ffremont.uitester.core;
+package com.github.ffremont.jrobot.core;
 
-import com.github.ffremont.uitester.core.models.UiConfig;
+import com.github.ffremont.jrobot.core.models.UiConfig;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.Properties;
 import net.codestory.simplelenium.SeleniumTest;
 import org.slf4j.LoggerFactory;
@@ -16,10 +20,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author florent
  */
-public abstract class FunctionalTest extends SeleniumTest {
+public abstract class JRobot extends SeleniumTest {
 
-    final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(FunctionalTest.class);
+    final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(JRobot.class);
 
+    public final static String LOCATION = Paths.get("").toAbsolutePath().toString();
+    
     public final static String ENV_PROPERTY = "env";
 
     private static Properties COMMONS_PROPS;
@@ -29,7 +35,7 @@ public abstract class FunctionalTest extends SeleniumTest {
     private String baseUrl;
     private PropertiesWrapper props;
 
-    public FunctionalTest(UiConfig config) {
+    public JRobot(UiConfig config) {
         super();
         this.id = config.getId();
         try {
@@ -45,7 +51,14 @@ public abstract class FunctionalTest extends SeleniumTest {
             String baseprop = config.getId().replace(".", System.getProperty("file.separator"));
             String testProps = baseprop + ".properties";
             Properties effectiveProps = new Properties();
-            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(testProps);
+            File basepropFile = new File(
+                    LOCATION
+                    +System.getProperty("file.separator")
+                    +testProps);
+            InputStream is = null;
+            if(basepropFile.exists()){
+                is = new FileInputStream(basepropFile);
+            }
             if (is != null) {
                 effectiveProps.load(is);
             }
@@ -54,7 +67,10 @@ public abstract class FunctionalTest extends SeleniumTest {
             Properties envv = new Properties();
             if (env != null) {
                 String envTestProps = baseprop + "_" + env + ".properties";
-                is = Thread.currentThread().getContextClassLoader().getResourceAsStream(envTestProps);
+                File envTestPropsFile = new File(LOCATION+System.getProperty("file.separator")+envTestProps);
+                if(envTestPropsFile.exists()){
+                    is = new FileInputStream(envTestPropsFile);
+                }
                 if (is != null) {
                     envv.load(is);
                 }
@@ -73,9 +89,21 @@ public abstract class FunctionalTest extends SeleniumTest {
 
     public static Properties getCommonsProps(String env, Properties from) {
         if (COMMONS_ENV_PROPS == null) {
-            String commonsPropsPath = "commons" + "_" + env + ".properties";
+            String commonsPropsPath = 
+                    LOCATION
+                    +System.getProperty("file.separator")
+                    +"commons" + "_" + env + ".properties";
             COMMONS_ENV_PROPS = new Properties(from);
-            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(commonsPropsPath);
+            
+            InputStream is = null;
+            File commonsPropsFile = new File(commonsPropsPath);
+            if(commonsPropsFile.exists()){
+                try {
+                    is = new FileInputStream(commonsPropsFile);
+                } catch (FileNotFoundException ex) {
+                    LOGGER.error("oups",ex);
+                }
+            }
             if (is != null) {
                 try {
                     COMMONS_ENV_PROPS.load(is);
@@ -90,8 +118,20 @@ public abstract class FunctionalTest extends SeleniumTest {
 
     public static Properties getCommonsProps() {
         if (COMMONS_PROPS == null) {
-            String commonsPropsPath = "commons.properties";
-            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(commonsPropsPath);
+            String commonsPropsPath = 
+                    LOCATION
+                    +System.getProperty("file.separator")
+                    +"commons.properties";
+            //InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(commonsPropsPath);
+             InputStream is = null;
+            File commonsPropsFile = new File(commonsPropsPath);
+            if(commonsPropsFile.exists()){
+                try {
+                    is = new FileInputStream(commonsPropsFile);
+                } catch (FileNotFoundException ex) {
+                    LOGGER.error("oups",ex);
+                }
+            }
             COMMONS_PROPS = new Properties();
             if (is != null) {
                 try {

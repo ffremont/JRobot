@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ffremont</groupId>
-  <artifactId>uiTester</artifactId>
+  <artifactId>ui</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <build>
     <plugins>
@@ -19,7 +19,7 @@
               <transformers>
                 <transformer>
                   <manifestEntries>
-                    <Main-Class>com.github.ffremont.uitester.UiApp</Main-Class>
+                    <Main-Class>com.github.ffremont.ui.UiApp</Main-Class>
                     <Class-Path>.</Class-Path>
                   </manifestEntries>
                 </transformer>

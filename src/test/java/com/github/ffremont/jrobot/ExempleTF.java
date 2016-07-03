@@ -1,4 +1,4 @@
-package com.github.ffremont.uitester;
+package com.github.ffremont.jrobot;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -7,15 +7,15 @@ package com.github.ffremont.uitester;
  */
 
 
-import com.github.ffremont.uitester.core.FunctionalTest;
-import com.github.ffremont.uitester.core.models.UiConfig;
+import com.github.ffremont.jrobot.core.JRobot;
+import com.github.ffremont.jrobot.core.models.UiConfig;
 import static org.junit.Assert.assertEquals;
 
 /**
  *
  * @author florent
  */
-public class ExempleTF extends FunctionalTest{
+public class ExempleTF extends JRobot{
 
     public ExempleTF(){
         super(UiConfig.create("web.test", "mon test"));

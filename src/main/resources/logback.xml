@@ -6,7 +6,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.github.ffremont.uitester" level="info" additivity="false">
+    <logger name="com.github.ffremont.jrobot" level="info" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
     <root level="error">

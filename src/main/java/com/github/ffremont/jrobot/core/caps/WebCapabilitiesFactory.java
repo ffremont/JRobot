@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.ffremont.uitester.core.caps;
+package com.github.ffremont.jrobot.core.caps;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 

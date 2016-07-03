@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.ffremont.uitester;
+package com.github.ffremont.jrobot;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;

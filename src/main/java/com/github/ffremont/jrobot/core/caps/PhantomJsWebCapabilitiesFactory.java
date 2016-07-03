@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.ffremont.uitester.core.caps;
+package com.github.ffremont.jrobot.core.caps;
 
-import com.github.ffremont.uitester.core.UiTesterRuntimeException;
+import com.github.ffremont.jrobot.core.UiRuntimeException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -23,16 +26,16 @@ public class PhantomJsWebCapabilitiesFactory implements WebCapabilitiesFactory {
 
     final static Logger LOGGER = LoggerFactory.getLogger(PhantomJsWebCapabilitiesFactory.class);
     
-    private static final String CONFIG_FILE = "phantomjs.properties";
+    public final static String CONFIG_FILE = Paths.get("phantomjs.properties").toAbsolutePath().toString();
     
     private final Properties sConfig;
 
     public PhantomJsWebCapabilitiesFactory() {
         sConfig = new Properties();
         try {
-            sConfig.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(CONFIG_FILE));
+            sConfig.load(Files.newInputStream(Paths.get(CONFIG_FILE), StandardOpenOption.READ));
         } catch (IOException ex) {
-            throw new UiTesterRuntimeException("impossible de changer la config de phantomjs", ex); 
+            throw new UiRuntimeException("impossible de changer la config de phantomjs", ex); 
        }
         
     }
@@ -41,13 +44,13 @@ public class PhantomJsWebCapabilitiesFactory implements WebCapabilitiesFactory {
     public DesiredCapabilities create() {        
         DesiredCapabilities sCaps = new DesiredCapabilities();
         sCaps.setJavascriptEnabled(true);
-        sCaps.setCapability("takesScreenshot", false);
+        sCaps.setCapability("takesScreenshot", true);
         
         // "phantomjs_exec_path"
         if (sConfig.getProperty("phantomjs_exec_path") != null) {
             sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, sConfig.getProperty("phantomjs_exec_path"));
         } else {
-            throw new UiTesterRuntimeException(String.format("Property '%s' not set!", PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY));
+            throw new UiRuntimeException(String.format("Property '%s' not set!", PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY));
         }
         // "phantomjs_driver_path"
         if (sConfig.getProperty("phantomjs_driver_path") != null) {
