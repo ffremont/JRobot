@@ -99,7 +99,7 @@ ws.url=${ws}/${ws.id}
   - ws.url=www.google.fr/dev/myTest
 
 - Possibilité d'organiser les cas d'utilisation avec des namespaces
- * ```java
+```java
 // va cherche dans ./web/test.properties la configuration du cas
 UiConfig.create("web.test", "mon test"); 
 ```
