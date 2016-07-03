@@ -25,7 +25,7 @@ public class JRobotAppTest extends UiTest {
     
     @BeforeClass
     public static void before() throws Exception{
-        setFinalStatic(PhantomJsWebCapabilitiesFactory.class.getField("CONFIG_FILE"), Paths.get("src", "test", "resources", "phantomjs.properties").toAbsolutePath().toString());
+        //setFinalStatic(PhantomJsWebCapabilitiesFactory.class.getField("CONFIG_FILE"), Paths.get("src", "test", "resources", "phantomjs.properties").toAbsolutePath().toString());
     }
 
     static void setFinalStatic(Field field, Object newValue) throws Exception {

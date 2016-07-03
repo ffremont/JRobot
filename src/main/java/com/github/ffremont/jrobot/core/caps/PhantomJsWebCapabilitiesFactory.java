@@ -7,6 +7,7 @@ package com.github.ffremont.jrobot.core.caps;
 
 import com.github.ffremont.jrobot.core.UiRuntimeException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -25,27 +26,33 @@ import org.slf4j.LoggerFactory;
 public class PhantomJsWebCapabilitiesFactory implements WebCapabilitiesFactory {
 
     final static Logger LOGGER = LoggerFactory.getLogger(PhantomJsWebCapabilitiesFactory.class);
-    
-    public final static String CONFIG_FILE = Paths.get("phantomjs.properties").toAbsolutePath().toString();
-    
+
+    private final static String PHANTOMJS_FILENAME = "phantomjs.properties";
+    public final static String CONFIG_FILE = Paths.get(PHANTOMJS_FILENAME).toAbsolutePath().toString();
+
     private final Properties sConfig;
 
     public PhantomJsWebCapabilitiesFactory() {
         sConfig = new Properties();
         try {
-            sConfig.load(Files.newInputStream(Paths.get(CONFIG_FILE), StandardOpenOption.READ));
+            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(PHANTOMJS_FILENAME);
+            if (is == null) {
+                sConfig.load(Files.newInputStream(Paths.get(CONFIG_FILE), StandardOpenOption.READ));
+            } else {
+                sConfig.load(is);
+            }
         } catch (IOException ex) {
-            throw new UiRuntimeException("impossible de changer la config de phantomjs", ex); 
-       }
-        
+            throw new UiRuntimeException("impossible de changer la config de phantomjs", ex);
+        }
+
     }
 
     @Override
-    public DesiredCapabilities create() {        
+    public DesiredCapabilities create() {
         DesiredCapabilities sCaps = new DesiredCapabilities();
         sCaps.setJavascriptEnabled(true);
         sCaps.setCapability("takesScreenshot", true);
-        
+
         // "phantomjs_exec_path"
         if (sConfig.getProperty("phantomjs_exec_path") != null) {
             sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, sConfig.getProperty("phantomjs_exec_path"));
@@ -59,7 +66,7 @@ public class PhantomJsWebCapabilitiesFactory implements WebCapabilitiesFactory {
         } else {
             LOGGER.debug("Test will use PhantomJS internal GhostDriver");
         }
-        
+
         List<String> cliArgsCap = new ArrayList<>();
         cliArgsCap.add("--web-security=false");
         cliArgsCap.add("--ssl-protocol=any");
@@ -67,11 +74,11 @@ public class PhantomJsWebCapabilitiesFactory implements WebCapabilitiesFactory {
         sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cliArgsCap);
 
         // Control LogLevel for GhostDriver, via CLI arguments
-        sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS, new String[] {
+        sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS, new String[]{
             "--logLevel=" + (sConfig.getProperty("phantomjs_driver_loglevel") != null ? sConfig.getProperty("phantomjs_driver_loglevel") : "ERROR"),
             "--logFile=" + (sConfig.getProperty("phantomjs_driver_logFile") != null ? sConfig.getProperty("phantomjs_driver_logFile") : "phantomjs.log")
         });
-        
+
         return sCaps;
     }
 }
